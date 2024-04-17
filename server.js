@@ -12,12 +12,20 @@ const server = http.createServer((req, res) => {
   switch (req.url) {
     case "/":
       path += "index.html";
+      res.statusCode = 200;
       break;
     case "/about":
       path += "about.html";
+      res.statusCode = 200;
+      break;
+    case "/about-me":
+      res.setHeader("location", "/about");
+      res.statusCode = 301;
+      res.end();
       break;
     default:
       path += "404.html";
+      res.statusCode = 404;
       break;
   }
 
@@ -29,6 +37,7 @@ const server = http.createServer((req, res) => {
     } else {
       //only one write can be written directly in res.end
       //   res.write(data);
+
       res.end(data);
     }
   });
